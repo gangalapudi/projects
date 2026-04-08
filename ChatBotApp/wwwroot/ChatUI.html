@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Chatbot</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f4f4;
+        }
+
+        .chat-container {
+            width: 500px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+
+        .chat-box {
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .user {
+            text-align: right;
+            margin: 10px;
+        }
+
+        .bot {
+            text-align: left;
+            margin: 10px;
+        }
+
+        .message {
+            display: inline-block;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .user .message {
+            background: #0078ff;
+            color: white;
+        }
+
+        .bot .message {
+            background: #e4e4e4;
+        }
+
+        .input-area {
+            display: flex;
+        }
+
+        input {
+            flex: 1;
+            padding: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #0078ff;
+            color: white;
+            border: none;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="chat-container">
+
+        <h2>AI Chatbot</h2>
+
+        <div id="chat" class="chat-box"></div>
+
+        <div class="input-area">
+            <input id="msg" placeholder="Ask something..." />
+            <button onclick="send()">Send</button>
+        </div>
+
+    </div>
+
+    <script>
+
+        async function send() {
+
+            let input = document.getElementById("msg");
+            let message = input.value;
+
+            if (message === "") return;
+
+            addMessage(message, "user");
+
+            input.value = "";
+
+            let res = await fetch("/api/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(message)
+            });
+
+            let data = await res.json();
+
+            addMessage(data.bot, "bot");
+        }
+
+        function addMessage(text, type) {
+
+            let chat = document.getElementById("chat");
+
+            let div = document.createElement("div");
+            div.className = type;
+
+            let msg = document.createElement("div");
+            msg.className = "message";
+            msg.innerText = text;
+
+            div.appendChild(msg);
+            chat.appendChild(div);
+
+            chat.scrollTop = chat.scrollHeight;
+
+        }
+
+    </script>
+
+</body>
+</html>
