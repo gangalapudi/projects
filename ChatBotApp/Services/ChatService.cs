@@ -7,7 +7,7 @@ namespace ChatBotApp.Services
     public class ChatService
     {
         private readonly HttpClient _httpClient;
-        private readonly string _apiKey = "gsk-proj-N-JH1971-UbxnXQLYsl5LGlWQIiog2f8uXYjF-B5uxLpMdDAWX1YGCh250EqcS8d_hC_aIz7fUT3BlbkFJ_D1to3UY4HIGjroZBQBMAy3byTOxRp7TQ37nrIVfLg7SyXvO_MTdGZ4UN78iqDqkzyb669IekA";
+        private readonly string _apiKey = "xx";
 
         public ChatService(HttpClient httpClient)
         {
